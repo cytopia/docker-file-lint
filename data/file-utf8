@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+set -u
+
+############################################################
+# Adjust for each check
+############################################################
+
+# Name and messages
+MY_NAME="file-utf8"
+MY_DESC="Scans recursively for files containing non UTF-8 encoding."
+MY_FINISH_OK="All files are UTF-8 encoded."
+MY_FINISH_ERR="Found files with non UTF-8 encoding."
+
+# Configuration file prefix
+MY_CONF_PRE="FILE_UTF8_"
+
+# Custom required binaries
+REQUIRED_CUST_BINS="isutf8"
+
+# Binaries required for fixing
+REQUIRED_FIX_BINS=""
+
+# Enable custom options (cmd arguments)
+# that can be parsed to the actual check binary?
+ENABLE_CUST_OPS=0
+
+# When not specifying --custom,
+# always use this as the default options
+# to parse to the check binary.
+DEFAULT_CUST_OPS=""
+
+# How to add your check here:
+# ---------------------------
+# $1   This comes from xargs/sh and represents
+#      the current file to work on:
+#      xargs sh '${MY_CHECK}' --
+#
+# __CUSTOM_OPT_PLACEHOLDER__
+#      This will be replaced either with custom options
+#      or with the default options.
+
+MY_CHECK="isutf8 \"\$1\" || true"
+
+# Can this check fix the problems?
+ENABLE_FIX=1
+
+MY_FIX_CMD="isutf8 \"\$1\" >/dev/null || (TERM=vt100 vi -u NONE -n -es -c \"set fileencoding=utf8\" -c \"wq\" \"\$1\" > /dev/tty && echo \"Fixing: \$1\" || echo \"FAILED: \$1\")"
+
+# Command to be displayed for --info
+MY_INFO="isutf8 --help | grep version"
+
+
+############################################################
+# Source library
+############################################################
+
+. /usr/bin/awesome-ci-lib.sh
