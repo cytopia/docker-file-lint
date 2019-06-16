@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+set -u
+
+############################################################
+# Adjust for each check
+############################################################
+
+# Name and messages
+MY_NAME="file-utf8-bom"
+MY_DESC="Scans recursively for files containing UTF-8 BOM."
+MY_FINISH_OK="No files have UTF-8 (Byte Order Mark)."
+MY_FINISH_ERR="Found files with UTF-8 BOM (Byte Order Mark)."
+
+# Configuration file prefix
+MY_CONF_PRE="FILE_UTF8_BOM_"
+
+# Custom required binaries
+REQUIRED_CUST_BINS="awk"
+
+# Binaries required for fixing
+REQUIRED_FIX_BINS=""
+
+# Enable custom options (cmd arguments)
+# that can be parsed to the actual check binary?
+ENABLE_CUST_OPS=0
+
+# When not specifying --custom,
+# always use this as the default options
+# to parse to the check binary.
+DEFAULT_CUST_OPS=""
+
+# How to add your check here:
+# ---------------------------
+# $1   This comes from xargs and represents
+#      the current file to work on:
+#      xargs sh '${MY_CHECK}' --
+#
+# __CUSTOM_OPT_PLACEHOLDER__
+#      This will be replaced either with custom options
+#      or with the default options.
+
+MY_CHECK="awk \"/^\xEF\xBB\xBF/ {print FILENAME} {nextfile}\" \"\$1\" || true"
+
+# Can this check fix the problems?
+ENABLE_FIX=1
+
+# Command for fixing
+MY_FIX_CMD="out=\"\$( awk \"/^\xEF\xBB\xBF/ {print FILENAME} {nextfile}\" \"\$1\" )\" || true; if [ \"\${out}\" != \"\" ]; then (sed -i\"\" -e \"1s/^\xEF\xBB\xBF//\" \"\$1\" && echo \"Fixing: \$1\" || echo \"FAILED: \$1\"); fi"
+
+# Command to be displayed for --info
+MY_INFO="(awk -Wversion 2>/dev/null || awk --version 2>&1) | grep -E '(([0-9]+)(\.))+'"
+
+
+############################################################
+# Source library
+############################################################
+
+. /usr/bin/awesome-ci-lib.sh
