@@ -4,7 +4,7 @@
 [![Tag](https://img.shields.io/github/tag/cytopia/docker-file-lint.svg)](https://github.com/cytopia/docker-file-lint/releases)
 [![](https://images.microbadger.com/badges/version/cytopia/file-lint:latest.svg)](https://microbadger.com/images/cytopia/file-lint:latest "file-lint")
 [![](https://images.microbadger.com/badges/image/cytopia/file-lint:latest.svg)](https://microbadger.com/images/cytopia/file-lint:latest "file-lint")
-[![](https://img.shields.io/badge/github-cytopia%2Fdocker--file-lint-red.svg)](https://github.com/cytopia/docker-file-lint "github.com/cytopia/docker-file-lint")
+[![](https://img.shields.io/badge/github-cytopia%2Fdocker--file--lint-red.svg)](https://github.com/cytopia/docker-file-lint "github.com/cytopia/docker-file-lint")
 [![License](https://img.shields.io/badge/license-MIT-%233DA639.svg)](https://opensource.org/licenses/MIT)
 
 > #### All awesome CI images
