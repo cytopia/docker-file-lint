@@ -32,21 +32,37 @@ Tiny Alpine-based Docker image for the very basics of CI against your code files
 
 ## Features
 
+### Overview
 * dry run (which shows all piped unix command voodoo for learning)
 * project based configuration file (`awesome-ci.conf`)
 * check for empty files
 * check for files with carriage returns (`\r`)
 * check for files with windows newlines (`\r\n`)
 * check for files with nullbyte characters (`\x00`)
-* check for trailing newlines (exactly one or multiple) at eof
-* check for trailing whitespace space
+* check for trailing newlines at eof (exactly one or multiple)
+* check for trailing white space
 * ensure files are utf8 encoded
-* ensure files do not contain byte order mark
+* ensure files do not contain utf8 bom (byte order mark: `<U+FEFF>`)
 * allows for automatic fixing (most commands)
 * allows for find-grained control
     - check files by specific extension(s) only
     - check files by specific shebang only
     - check binary or text-files only
+
+### Tools
+| Type | Tool | Fixable | Description |
+|------|------|---------|-------------|
+| File | [file-cr](data/file-cr) | ✓ | Scan files and check if they contain CR (Carriage Return only). |
+| File | [file-crlf](data/file-crlf) | ✓ | Scan files and check if they contain CRLF (Windows Line Feeds). |
+| File | [file-empty](data/file-empty) | | Scan files and check if they are empty (0 bytes). |
+| File | [file-nullbyter](data/file-nullbyte-char) | ✓ | Scan files and check if they contain a null-byte character (`\x00)`. |
+| File | [file-trailing-newline](data/file-trailing-newline) | ✓ | Scan files and check if they contain a trailing newline. |
+| File | [file-trailing-single-newline](data/file-trailing-single-newline) | ✓ | Scan files and check if they contain exactly one trailing newline. |
+| File | [file-trailing-space](data/file-trailing-space) | ✓ | Scan files and check if they contain trailing whitespaces. |
+| File | [file-utf8](data/file-utf8) | ✓ | Scan files and check if they have a non UTF-8 encoding. |
+| File | [file-utf8-bom](data/file-utf8-bom) | ✓ | Scan files and check if they contain BOM (Byte Order Mark): `<U+FEFF>`. |
+
+> <sub>Tools extracted from https://github.com/cytopia/awesome-ci</sub>
 
 
 ## Available Docker image versions
