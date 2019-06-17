@@ -55,7 +55,7 @@ Tiny Alpine-based Docker image for the very basics of CI against your code files
 | File | [file-cr](data/file-cr) | ✓ | Scan files and check if they contain CR (Carriage Return only). |
 | File | [file-crlf](data/file-crlf) | ✓ | Scan files and check if they contain CRLF (Windows Line Feeds). |
 | File | [file-empty](data/file-empty) | | Scan files and check if they are empty (0 bytes). |
-| File | [file-nullbyter](data/file-nullbyte-char) | ✓ | Scan files and check if they contain a null-byte character (`\x00)`. |
+| File | [file-nullbyte](data/file-nullbyte) | ✓ | Scan files and check if they contain a null-byte character (`\x00)`. |
 | File | [file-trailing-newline](data/file-trailing-newline) | ✓ | Scan files and check if they contain a trailing newline. |
 | File | [file-trailing-single-newline](data/file-trailing-single-newline) | ✓ | Scan files and check if they contain exactly one trailing newline. |
 | File | [file-trailing-space](data/file-trailing-space) | ✓ | Scan files and check if they contain trailing whitespaces. |
