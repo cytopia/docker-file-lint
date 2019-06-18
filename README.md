@@ -70,6 +70,7 @@ Tiny Alpine-based Docker image for the very basics of CI against your code files
 | Docker tag | Build from |
 |------------|------------|
 | `latest`   | Current stable file-lint version |
+| `<tag>`    | Git tag from this repository     |
 
 
 ## Docker mounts
