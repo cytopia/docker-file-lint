@@ -20,14 +20,6 @@ services:
 
 
 ###
-### Build Matrix
-###
-env:
-  matrix:
-    - VERSION=latest
-
-
-###
 ### Install requirements
 ###
 install:
@@ -41,8 +33,8 @@ install:
 ### Check generation changes, build and test
 ###
 before_script:
-  - while ! make build TAG=${VERSION}; do sleep 1; done
-  - while ! make test TAG=${VERSION}; do sleep 1; done
+  - while ! make build; do sleep 1; done
+  - while ! make test; do sleep 1; done
 
 
 ###
@@ -53,11 +45,11 @@ script:
   - if [ "${TRAVIS_PULL_REQUEST}" == "false" ]; then
       while ! make login USER="${DOCKER_USERNAME}" PASS="${DOCKER_PASSWORD}"; do sleep 1; done;
       if [ -n "${TRAVIS_TAG}" ]; then
-        while ! make push TAG="${VERSION}-${TRAVIS_TAG}"; do sleep 1; done;
+        while ! make push TAG="${TRAVIS_TAG}"; do sleep 1; done;
       elif [ "${TRAVIS_BRANCH}" == "master" ]; then
-        while ! make push TAG=${VERSION}; do sleep 1; done;
+        while ! make push; do sleep 1; done;
       elif [[ ${TRAVIS_BRANCH} =~ ^(release-[.0-9]+)$ ]]; then
-        while ! make push TAG="${VERSION}-${TRAVIS_BRANCH}"; do sleep 1; done;
+        while ! make push TAG="${TRAVIS_BRANCH}"; do sleep 1; done;
       else
         echo "Skipping branch ${TRAVIS_BRANCH}";
       fi
