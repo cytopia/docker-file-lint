@@ -2,27 +2,38 @@
 
 [![Build Status](https://travis-ci.com/cytopia/docker-file-lint.svg?branch=master)](https://travis-ci.com/cytopia/docker-file-lint)
 [![Tag](https://img.shields.io/github/tag/cytopia/docker-file-lint.svg)](https://github.com/cytopia/docker-file-lint/releases)
-[![](https://images.microbadger.com/badges/version/cytopia/file-lint:latest.svg)](https://microbadger.com/images/cytopia/file-lint:latest "file-lint")
-[![](https://images.microbadger.com/badges/image/cytopia/file-lint:latest.svg)](https://microbadger.com/images/cytopia/file-lint:latest "file-lint")
+[![](https://images.microbadger.com/badges/version/cytopia/file-lint:latest.svg?&kill_cache=1)](https://microbadger.com/images/cytopia/file-lint:latest "file-lint")
+[![](https://images.microbadger.com/badges/image/cytopia/file-lint:latest.svg?&kill_cache=1)](https://microbadger.com/images/cytopia/file-lint:latest "file-lint")
 [![](https://img.shields.io/badge/github-cytopia%2Fdocker--file--lint-red.svg)](https://github.com/cytopia/docker-file-lint "github.com/cytopia/docker-file-lint")
 [![License](https://img.shields.io/badge/license-MIT-%233DA639.svg)](https://opensource.org/licenses/MIT)
 
-> #### All awesome CI images
+> #### All [#awesome-ci](https://github.com/topics/awesome-ci) Docker images
 >
-> [ansible](https://github.com/cytopia/docker-ansible) |
-> [ansible-lint](https://github.com/cytopia/docker-ansible-lint) |
-> [awesome-ci](https://github.com/cytopia/awesome-ci) |
-> [eslint](https://github.com/cytopia/docker-eslint) |
-> [file-lint](https://github.com/cytopia/docker-file-lint) |
-> [jsonlint](https://github.com/cytopia/docker-jsonlint) |
-> [pycodestyle](https://github.com/cytopia/docker-pycodestyle) |
-> [terraform-docs](https://github.com/cytopia/docker-terraform-docs) |
+> [ansible](https://github.com/cytopia/docker-ansible) **•**
+> [ansible-lint](https://github.com/cytopia/docker-ansible-lint) **•**
+> [awesome-ci](https://github.com/cytopia/awesome-ci) **•**
+> [black](https://github.com/cytopia/docker-black) **•**
+> [checkmake](https://github.com/cytopia/docker-checkmake) **•**
+> [eslint](https://github.com/cytopia/docker-eslint) **•**
+> [file-lint](https://github.com/cytopia/docker-file-lint) **•**
+> [gofmt](https://github.com/cytopia/docker-gofmt) **•**
+> [golint](https://github.com/cytopia/docker-golint) **•**
+> [jsonlint](https://github.com/cytopia/docker-jsonlint) **•**
+> [phpcs](https://github.com/cytopia/docker-phpcs) **•**
+> [pycodestyle](https://github.com/cytopia/docker-pycodestyle) **•**
+> [pylint](https://github.com/cytopia/docker-pylint) **•**
+> [terraform-docs](https://github.com/cytopia/docker-terraform-docs) **•**
+> [terragrunt](https://github.com/cytopia/docker-terragrunt) **•**
 > [yamllint](https://github.com/cytopia/docker-yamllint)
 
 
+> #### All [#awesome-ci](https://github.com/topics/awesome-ci) Makefiles
+>
+> Visit **[cytopia/makefiles](https://github.com/cytopia/makefiles)** for seamless project integration, minimum required best-practice code linting and CI.
+
 View **[Dockerfile](https://github.com/cytopia/docker-file-lint/blob/master/Dockerfile)** on GitHub.
 
-[![Docker hub](http://dockeri.co/image/cytopia/file-lint)](https://hub.docker.com/r/cytopia/file-lint)
+[![Docker hub](http://dockeri.co/image/cytopia/file-lint?&kill_cache=1)](https://hub.docker.com/r/cytopia/file-lint)
 
 
 Tiny Alpine-based Docker image for the very basics of CI against your code files based one [awesome-ci](https://github.com/topics/awesome-ci)<sup>[1]</sup>.
@@ -309,6 +320,9 @@ endif
 
 CURRENT_DIR = $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 
+FL_VERSION      = latest
+FL_IGNORE_PATHS = .git/,.github/
+
 lint:
 	@$(MAKE) --no-print-directory _lint-cr
 	@$(MAKE) --no-print-directory _lint-crlf
@@ -318,23 +332,56 @@ lint:
 	@$(MAKE) --no-print-directory _lint-utf8-bom
 
 _lint-cr:
-	@docker run --rm -v $(CURRENT_DIR):/data cytopia/file-lint file-cr --text --ignore '.git/,.github/' --path .
+	@docker run --rm -v $(CURRENT_DIR):/data cytopia/file-lint:$(FL_VERSION) file-cr --text --ignore '$(FL_IGNORE_PATHS)' --path .
 
 _lint-crlf:
-	@docker run --rm -v $(CURRENT_DIR):/data cytopia/file-lint file-crlf --text --ignore '.git/,.github/' --path .
+	@docker run --rm -v $(CURRENT_DIR):/data cytopia/file-lint:$(FL_VERSION) file-crlf --text --ignore '$(FL_IGNORE_PATHS)' --path .
 
 _lint-trailing-single-newline:
-	@docker run --rm -v $(CURRENT_DIR):/data cytopia/file-lint file-trailing-single-newline --text --ignore '.git/,.github/' --path .
+	@docker run --rm -v $(CURRENT_DIR):/data cytopia/file-lint:$(FL_VERSION) file-trailing-single-newline --text --ignore '$(FL_IGNORE_PATHS)' --path .
 
 _lint-trailing-space:
-	@docker run --rm -v $(CURRENT_DIR):/data cytopia/file-lint file-trailing-space --text --ignore '.git/,.github/' --path .
+	@docker run --rm -v $(CURRENT_DIR):/data cytopia/file-lint:$(FL_VERSION) file-trailing-space --text --ignore '$(FL_IGNORE_PATHS)' --path .
 
 _lint-utf8:
-	@docker run --rm -v $(CURRENT_DIR):/data cytopia/file-lint file-utf8 --text --ignore '.git/,.github/' --path .
+	@docker run --rm -v $(CURRENT_DIR):/data cytopia/file-lint:$(FL_VERSION) file-utf8 --text --ignore '$(FL_IGNORE_PATHS)' --path .
 
 _lint-utf8-bom:
-	@docker run --rm -v $(CURRENT_DIR):/data cytopia/file-lint file-utf8-bom --text --ignore '.git/,.github/' --path .
+	@docker run --rm -v $(CURRENT_DIR):/data cytopia/file-lint:$(FL_VERSION) file-utf8-bom --text --ignore '$(FL_IGNORE_PATHS)' --path .
 ```
+
+
+## Related [#awesome-ci](https://github.com/topics/awesome-ci) projects
+
+### Docker images
+
+Save yourself from installing lot's of dependencies and pick a dockerized version of your favourite
+linter below for reproducible local or remote CI tests:
+
+| Docker image | Type | Description |
+|--------------|------|-------------|
+| [awesome-ci](https://github.com/cytopia/awesome-ci) | Basic | Tools for git, file and static source code analysis |
+| [file-lint](https://github.com/cytopia/docker-file-lint) | Basic | Baisc source code analysis |
+| [jsonlint](https://github.com/cytopia/docker-jsonlint) | Basic | Lint JSON files |
+| [yamllint](https://github.com/cytopia/docker-yamllint) | Basic | Lint Yaml files |
+| [ansible](https://github.com/cytopia/docker-ansible) | Ansible | Multiple versoins of Ansible |
+| [ansible-lint](https://github.com/cytopia/docker-ansible-lint) | Ansible | Lint  Ansible |
+| [gofmt](https://github.com/cytopia/docker-gofmt) | Go | Format Go source code |
+| [golint](https://github.com/cytopia/docker-golint) | Go | Lint Go code |
+| [eslint](https://github.com/cytopia/docker-eslint) | Javascript | Lint Javascript code |
+| [checkmake](https://github.com/cytopia/docker-checkmake) | Make | Lint Makefiles |
+| [phpcs](https://github.com/cytopia/docker-phpcs) | PHP | PHPCodeSniffer and Code Beautifier and Fixer |
+| [black](https://github.com/cytopia/docker-black) | Python | The uncompromising Python code formatter |
+| [pycodestyle](https://github.com/cytopia/docker-pycodestyle) | Python | Python style guide checker |
+| [pylint](https://github.com/cytopia/docker-pylint) | Python | Python source code, bug and quality checker |
+| [terraform-docs](https://github.com/cytopia/docker-terraform-docs) | Terraform | Terraform doc generator (TF 0.12 ready) |
+| [terragrunt](https://github.com/cytopia/docker-terragrunt) | Terraform | Terragrunt and Terraform |
+
+
+### Makefiles
+
+Visit **[cytopia/makefiles](https://github.com/cytopia/makefiles)** for dependency-less, seamless project integration and minimum required best-practice code linting for CI.
+The provided Makefiles will only require GNU Make and Docker itself removing the need to install anything else.
 
 
 ## License
