@@ -2,7 +2,7 @@ ifneq (,)
 .error This Makefile requires GNU Make.
 endif
 
-.PHONY: build rebuild lint test _test_req _test_run_succ _test_run_fail tag pull login push enter
+.PHONY: build rebuild lint test _test-req _test-run-succ _test-run-fail tag pull login push enter
 
 CURRENT_DIR = $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 
@@ -26,11 +26,11 @@ lint:
 	@docker run --rm -v $(CURRENT_DIR):/data cytopia/file-lint file-utf8-bom --text --ignore '.git/,.github/,tests/' --path .
 
 test:
-	@$(MAKE) --no-print-directory _test_req
-	@$(MAKE) --no-print-directory _test_run_succ
-	@$(MAKE) --no-print-directory _test_run_fail
+	@$(MAKE) --no-print-directory _test-req
+	@$(MAKE) --no-print-directory _test-run-succ
+	@$(MAKE) --no-print-directory _test-run-fail
 
-_test_req:
+_test-req:
 	@echo "------------------------------------------------------------"
 	@echo "- Testing requirements"
 	@echo "------------------------------------------------------------"
@@ -44,7 +44,7 @@ _test_req:
 	@docker run --rm $(IMAGE) file-utf8 --info
 	@docker run --rm $(IMAGE) file-utf8-bom --info
 
-_test_run_succ:
+_test-run-succ:
 	@echo "------------------------------------------------------------"
 	@echo "- Runtime test: False positives"
 	@echo "------------------------------------------------------------"
@@ -58,7 +58,7 @@ _test_run_succ:
 	@docker run --rm -v $(CURRENT_DIR)/tests/ok:/data $(IMAGE) file-utf8 --path .
 	@docker run --rm -v $(CURRENT_DIR)/tests/ok:/data $(IMAGE) file-utf8-bom --path .
 
-_test_run_fail:
+_test-run-fail:
 	@echo "------------------------------------------------------------"
 	@echo "- Runtime test: True flaws"
 	@echo "------------------------------------------------------------"
