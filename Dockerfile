@@ -7,7 +7,7 @@ RUN set -x \
 FROM alpine:latest
 LABEL \
 	maintainer="cytopia <cytopia@everythingcli.org>" \
-	repo="https://github.com/cytopia/docker-jsonlint"
+	repo="https://github.com/cytopia/docker-file-lint"
 
 RUN set -x \
 	&& apk add --no-cache \
