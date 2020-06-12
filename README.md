@@ -21,11 +21,14 @@
 > [goimports][gimp-git-lnk] **•**
 > [golint][glint-git-lnk] **•**
 > [jsonlint][jlint-git-lnk] **•**
+> [linkcheck][linkcheck-git-lnk] **•**
+> [mypy][mypy-git-lnk] **•**
 > [phpcbf][pcbf-git-lnk] **•**
 > [phpcs][pcs-git-lnk] **•**
 > [phplint][plint-git-lnk] **•**
 > [php-cs-fixer][pcsf-git-lnk] **•**
 > [pycodestyle][pycs-git-lnk] **•**
+> [pydocstyle][pyds-git-lnk] **•**
 > [pylint][pylint-git-lnk] **•**
 > [terraform-docs][tfdocs-git-lnk] **•**
 > [terragrunt][tg-git-lnk] **•**
@@ -78,6 +81,7 @@ Tiny Alpine-based Docker image for the very basics of CI against your code files
 | File | [file-trailing-space](data/file-trailing-space) | ✓ | Scan files and check if they contain trailing whitespaces. |
 | File | [file-utf8](data/file-utf8) | ✓ | Scan files and check if they have a non UTF-8 encoding. |
 | File | [file-utf8-bom](data/file-utf8-bom) | ✓ | Scan files and check if they contain BOM (Byte Order Mark): `U+FEFF`. |
+| Git  | [git-conflicts](data/git-conflicts) |   | Scan files and check if they contain git conflicts. |
 
 > <sub>Tools extracted from https://github.com/cytopia/awesome-ci</sub>
 
@@ -126,6 +130,7 @@ $ docker run --rm -v $(pwd):/data cytopia/file-lint
 # file-trailing-space           Scans if files contain trailing whitespace     #
 # file-utf8                     Scans if files are utf8 encoded                #
 # file-utf8-bom                 Scans if files contain byte order mark         #
+# git-conflicts                 Scans if files contain git conflicts           #
 #                                                                              #
 #                                                                              #
 # Example:                                                                     #
@@ -314,6 +319,12 @@ FILE_UTF8_BOM_EXTENSION=""
 FILE_UTF8_BOM_IGNORE=".git,*.svn"
 FILE_UTF8_BOM_TEXT=1
 FILE_UTF8_BOM_SIZE=1
+
+# git-conflicts
+GIT_CONFLICTS_EXTENSION=""
+GIT_CONFLICTS_IGNORE=".git,*.svn"
+GIT_CONFLICTS_TEXT=1
+GIT_CONFLICTS_SIZE=1
 ```
 
 ### Example Makefile
@@ -322,9 +333,7 @@ ifneq (,)
 .error This Makefile requires GNU Make.
 endif
 
-.PHONY: lint _lint-cr _lint-crlf _lint-trailing-single-newline _lint-trailing-space _lint-utf8 _lint-utf8-bom
-
-CURRENT_DIR = $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
+.PHONY: lint _lint-cr _lint-crlf _lint-trailing-single-newline _lint-trailing-space _lint-utf8 _lint-utf8-bom _lint-git-conflicts
 
 FL_VERSION      = latest
 FL_IGNORE_PATHS = .git/,.github/
@@ -336,24 +345,29 @@ lint:
 	@$(MAKE) --no-print-directory _lint-trailing-space
 	@$(MAKE) --no-print-directory _lint-utf8
 	@$(MAKE) --no-print-directory _lint-utf8-bom
+    @$(MAKE) --no-print-directory _lint-git-conflicts
 
 _lint-cr:
-	@docker run --rm -v $(CURRENT_DIR):/data cytopia/file-lint:$(FL_VERSION) file-cr --text --ignore '$(FL_IGNORE_PATHS)' --path .
+	@docker run --rm -v $(PWD):/data cytopia/file-lint:$(FL_VERSION) file-cr --text --ignore '$(FL_IGNORE_PATHS)' --path .
 
 _lint-crlf:
-	@docker run --rm -v $(CURRENT_DIR):/data cytopia/file-lint:$(FL_VERSION) file-crlf --text --ignore '$(FL_IGNORE_PATHS)' --path .
+	@docker run --rm -v $(PWD):/data cytopia/file-lint:$(FL_VERSION) file-crlf --text --ignore '$(FL_IGNORE_PATHS)' --path .
 
 _lint-trailing-single-newline:
-	@docker run --rm -v $(CURRENT_DIR):/data cytopia/file-lint:$(FL_VERSION) file-trailing-single-newline --text --ignore '$(FL_IGNORE_PATHS)' --path .
+	@docker run --rm -v $(PWD):/data cytopia/file-lint:$(FL_VERSION) file-trailing-single-newline --text --ignore '$(FL_IGNORE_PATHS)' --path .
 
 _lint-trailing-space:
-	@docker run --rm -v $(CURRENT_DIR):/data cytopia/file-lint:$(FL_VERSION) file-trailing-space --text --ignore '$(FL_IGNORE_PATHS)' --path .
+	@docker run --rm -v $(PWD):/data cytopia/file-lint:$(FL_VERSION) file-trailing-space --text --ignore '$(FL_IGNORE_PATHS)' --path .
 
 _lint-utf8:
-	@docker run --rm -v $(CURRENT_DIR):/data cytopia/file-lint:$(FL_VERSION) file-utf8 --text --ignore '$(FL_IGNORE_PATHS)' --path .
+	@docker run --rm -v $(PWD):/data cytopia/file-lint:$(FL_VERSION) file-utf8 --text --ignore '$(FL_IGNORE_PATHS)' --path .
 
 _lint-utf8-bom:
-	@docker run --rm -v $(CURRENT_DIR):/data cytopia/file-lint:$(FL_VERSION) file-utf8-bom --text --ignore '$(FL_IGNORE_PATHS)' --path .
+	@docker run --rm -v $(PWD):/data cytopia/file-lint:$(FL_VERSION) file-utf8-bom --text --ignore '$(FL_IGNORE_PATHS)' --path .
+
+_lint-git-conflicts:
+	@docker run --rm -v $(PWD):/data cytopia/file-lint:$(FL_VERSION) git-conflicts --text --ignore '$(FL_IGNORE_PATHS)' --path .
+
 ```
 
 
@@ -368,6 +382,7 @@ linter below for reproducible local or remote CI tests:
 |--------|-----------|------|-------------|
 | [awesome-ci][aci-git-lnk]        | [![aci-hub-img]][aci-hub-lnk]         | Basic      | Tools for git, file and static source code analysis |
 | [file-lint][flint-git-lnk]       | [![flint-hub-img]][flint-hub-lnk]     | Basic      | Baisc source code analysis |
+| [linkcheck][linkcheck-git-lnk]   | [![linkcheck-hub-img]][flint-hub-lnk] | Basic      | Search for URLs in files and validate their HTTP status code |
 | [ansible][ansible-git-lnk]       | [![ansible-hub-img]][ansible-hub-lnk] | Ansible    | Multiple versions and flavours of Ansible |
 | [ansible-lint][alint-git-lnk]    | [![alint-hub-img]][alint-hub-lnk]     | Ansible    | Lint Ansible |
 | [gofmt][gfmt-git-lnk]            | [![gfmt-hub-img]][gfmt-hub-lnk]       | Go         | Format Go source code **<sup>[1]</sup>** |
@@ -381,7 +396,9 @@ linter below for reproducible local or remote CI tests:
 | [phplint][plint-git-lnk]         | [![plint-hub-img]][plint-hub-lnk]     | PHP        | PHP Code Linter **<sup>[1]</sup>** |
 | [php-cs-fixer][pcsf-git-lnk]     | [![pcsf-hub-img]][pcsf-hub-lnk]       | PHP        | PHP Coding Standards Fixer |
 | [black][black-git-lnk]           | [![black-hub-img]][black-hub-lnk]     | Python     | The uncompromising Python code formatter |
+| [mypy][mypy-git-lnk]             | [![mypy-hub-img]][mypy-hub-lnk]       | Python     | Static source code analysis |
 | [pycodestyle][pycs-git-lnk]      | [![pycs-hub-img]][pycs-hub-lnk]       | Python     | Python style guide checker |
+| [pydocstyle][pyds-git-lnk]       | [![pyds-hub-img]][pyds-hub-lnk]       | Python     | Python docstyle checker |
 | [pylint][pylint-git-lnk]         | [![pylint-hub-img]][pylint-hub-lnk]   | Python     | Python source code, bug and quality checker |
 | [terraform-docs][tfdocs-git-lnk] | [![tfdocs-hub-img]][tfdocs-hub-lnk]   | Terraform  | Terraform doc generator (TF 0.12 ready) **<sup>[1]</sup>** |
 | [terragrunt][tg-git-lnk]         | [![tg-hub-img]][tg-hub-lnk]           | Terraform  | Terragrunt and Terraform |
@@ -398,6 +415,10 @@ linter below for reproducible local or remote CI tests:
 [flint-git-lnk]: https://github.com/cytopia/docker-file-lint
 [flint-hub-img]: https://img.shields.io/docker/pulls/cytopia/file-lint.svg
 [flint-hub-lnk]: https://hub.docker.com/r/cytopia/file-lint
+
+[linkcheck-git-lnk]: https://github.com/cytopia/docker-linkcheck
+[linkcheck-hub-img]: https://img.shields.io/docker/pulls/cytopia/linkcheck.svg
+[linkcheck-hub-lnk]: https://hub.docker.com/r/cytopia/linkcheck
 
 [jlint-git-lnk]: https://github.com/cytopia/docker-jsonlint
 [jlint-hub-img]: https://img.shields.io/docker/pulls/cytopia/jsonlint.svg
@@ -451,9 +472,17 @@ linter below for reproducible local or remote CI tests:
 [black-hub-img]: https://img.shields.io/docker/pulls/cytopia/black.svg
 [black-hub-lnk]: https://hub.docker.com/r/cytopia/black
 
+[mypy-git-lnk]: https://github.com/cytopia/docker-mypy
+[mypy-hub-img]: https://img.shields.io/docker/pulls/cytopia/mypy.svg
+[mypy-hub-lnk]: https://hub.docker.com/r/cytopia/mypy
+
 [pycs-git-lnk]: https://github.com/cytopia/docker-pycodestyle
 [pycs-hub-img]: https://img.shields.io/docker/pulls/cytopia/pycodestyle.svg
 [pycs-hub-lnk]: https://hub.docker.com/r/cytopia/pycodestyle
+
+[pyds-git-lnk]: https://github.com/cytopia/docker-pydocstyle
+[pyds-hub-img]: https://img.shields.io/docker/pulls/cytopia/pydocstyle.svg
+[pyds-hub-lnk]: https://hub.docker.com/r/cytopia/pydocstyle
 
 [pylint-git-lnk]: https://github.com/cytopia/docker-pylint
 [pylint-hub-img]: https://img.shields.io/docker/pulls/cytopia/pylint.svg

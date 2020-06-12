@@ -1,1 +1,9 @@
 No git conflicts found
+The following are all non-valid delimiter
+>>>>>>>
+>>>>>>>branch-a
+ >>>>>>> branch-a
+
+<<<<<<<
+<<<<<<<HEAD
+ <<<<<<< HEAD
