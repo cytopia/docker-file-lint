@@ -25,6 +25,7 @@ echo "# file-trailing-single-newline  Scans if files contain single trailing new
 echo "# file-trailing-space           Scans if files contain trailing whitespace     #"
 echo "# file-utf8                     Scans if files are utf8 encoded                #"
 echo "# file-utf8-bom                 Scans if files contain byte order mark         #"
+echo "# git-conflicts                 Scans if files contain git conflicts           #"
 echo "#                                                                              #"
 echo "#                                                                              #"
 echo "# Example:                                                                     #"

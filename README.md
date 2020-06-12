@@ -78,6 +78,7 @@ Tiny Alpine-based Docker image for the very basics of CI against your code files
 | File | [file-trailing-space](data/file-trailing-space) | ✓ | Scan files and check if they contain trailing whitespaces. |
 | File | [file-utf8](data/file-utf8) | ✓ | Scan files and check if they have a non UTF-8 encoding. |
 | File | [file-utf8-bom](data/file-utf8-bom) | ✓ | Scan files and check if they contain BOM (Byte Order Mark): `U+FEFF`. |
+| Git  | [git-conflicts](data/git-conflicts) | x | Scan files and check if they contain git conflicts. |
 
 > <sub>Tools extracted from https://github.com/cytopia/awesome-ci</sub>
 
@@ -126,6 +127,7 @@ $ docker run --rm -v $(pwd):/data cytopia/file-lint
 # file-trailing-space           Scans if files contain trailing whitespace     #
 # file-utf8                     Scans if files are utf8 encoded                #
 # file-utf8-bom                 Scans if files contain byte order mark         #
+# git-conflicts                 Scans if files contain git conflicts           #
 #                                                                              #
 #                                                                              #
 # Example:                                                                     #
@@ -314,6 +316,12 @@ FILE_UTF8_BOM_EXTENSION=""
 FILE_UTF8_BOM_IGNORE=".git,*.svn"
 FILE_UTF8_BOM_TEXT=1
 FILE_UTF8_BOM_SIZE=1
+
+# git-conflicts
+GIT_CONFLICTS_EXTENSION=""
+GIT_CONFLICTS_IGNORE=".git,*.svn"
+GIT_CONFLICTS_TEXT=1
+GIT_CONFLICTS_SIZE=1
 ```
 
 ### Example Makefile

@@ -43,6 +43,7 @@ _test-req:
 	@docker run --rm $(IMAGE) file-trailing-space --info
 	@docker run --rm $(IMAGE) file-utf8 --info
 	@docker run --rm $(IMAGE) file-utf8-bom --info
+	@docker run --rm $(IMAGE) git-conflicts --info
 
 _test-run-succ:
 	@echo "------------------------------------------------------------"
@@ -57,6 +58,7 @@ _test-run-succ:
 	@docker run --rm -v $(CURRENT_DIR)/tests/ok:/data $(IMAGE) file-trailing-space --path .
 	@docker run --rm -v $(CURRENT_DIR)/tests/ok:/data $(IMAGE) file-utf8 --path .
 	@docker run --rm -v $(CURRENT_DIR)/tests/ok:/data $(IMAGE) file-utf8-bom --path .
+	@docker run --rm -v $(CURRENT_DIR)/tests/ok:/data $(IMAGE) git-conflicts --path .
 
 _test-run-fail:
 	@echo "------------------------------------------------------------"
@@ -87,6 +89,9 @@ _test-run-fail:
 		exit 1; \
 	fi
 	@if docker run --rm -v $(CURRENT_DIR)/tests/err:/data $(IMAGE) file-utf8-bom --path .; then \
+		exit 1; \
+	fi
+	@if docker run --rm -v $(CURRENT_DIR)/tests/err:/data $(IMAGE) git-conflicts --path .; then \
 		exit 1; \
 	fi
 
