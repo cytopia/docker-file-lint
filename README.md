@@ -81,7 +81,7 @@ Tiny Alpine-based Docker image for the very basics of CI against your code files
 | File | [file-trailing-space](data/file-trailing-space) | ✓ | Scan files and check if they contain trailing whitespaces. |
 | File | [file-utf8](data/file-utf8) | ✓ | Scan files and check if they have a non UTF-8 encoding. |
 | File | [file-utf8-bom](data/file-utf8-bom) | ✓ | Scan files and check if they contain BOM (Byte Order Mark): `U+FEFF`. |
-| Git  | [git-conflicts](data/git-conflicts) | x | Scan files and check if they contain git conflicts. |
+| Git  | [git-conflicts](data/git-conflicts) |   | Scan files and check if they contain git conflicts. |
 
 > <sub>Tools extracted from https://github.com/cytopia/awesome-ci</sub>
 
@@ -333,9 +333,7 @@ ifneq (,)
 .error This Makefile requires GNU Make.
 endif
 
-.PHONY: lint _lint-cr _lint-crlf _lint-trailing-single-newline _lint-trailing-space _lint-utf8 _lint-utf8-bom
-
-CURRENT_DIR = $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
+.PHONY: lint _lint-cr _lint-crlf _lint-trailing-single-newline _lint-trailing-space _lint-utf8 _lint-utf8-bom _lint-git-conflicts
 
 FL_VERSION      = latest
 FL_IGNORE_PATHS = .git/,.github/
@@ -347,24 +345,29 @@ lint:
 	@$(MAKE) --no-print-directory _lint-trailing-space
 	@$(MAKE) --no-print-directory _lint-utf8
 	@$(MAKE) --no-print-directory _lint-utf8-bom
+    @$(MAKE) --no-print-directory _lint-git-conflicts
 
 _lint-cr:
-	@docker run --rm -v $(CURRENT_DIR):/data cytopia/file-lint:$(FL_VERSION) file-cr --text --ignore '$(FL_IGNORE_PATHS)' --path .
+	@docker run --rm -v $(PWD):/data cytopia/file-lint:$(FL_VERSION) file-cr --text --ignore '$(FL_IGNORE_PATHS)' --path .
 
 _lint-crlf:
-	@docker run --rm -v $(CURRENT_DIR):/data cytopia/file-lint:$(FL_VERSION) file-crlf --text --ignore '$(FL_IGNORE_PATHS)' --path .
+	@docker run --rm -v $(PWD):/data cytopia/file-lint:$(FL_VERSION) file-crlf --text --ignore '$(FL_IGNORE_PATHS)' --path .
 
 _lint-trailing-single-newline:
-	@docker run --rm -v $(CURRENT_DIR):/data cytopia/file-lint:$(FL_VERSION) file-trailing-single-newline --text --ignore '$(FL_IGNORE_PATHS)' --path .
+	@docker run --rm -v $(PWD):/data cytopia/file-lint:$(FL_VERSION) file-trailing-single-newline --text --ignore '$(FL_IGNORE_PATHS)' --path .
 
 _lint-trailing-space:
-	@docker run --rm -v $(CURRENT_DIR):/data cytopia/file-lint:$(FL_VERSION) file-trailing-space --text --ignore '$(FL_IGNORE_PATHS)' --path .
+	@docker run --rm -v $(PWD):/data cytopia/file-lint:$(FL_VERSION) file-trailing-space --text --ignore '$(FL_IGNORE_PATHS)' --path .
 
 _lint-utf8:
-	@docker run --rm -v $(CURRENT_DIR):/data cytopia/file-lint:$(FL_VERSION) file-utf8 --text --ignore '$(FL_IGNORE_PATHS)' --path .
+	@docker run --rm -v $(PWD):/data cytopia/file-lint:$(FL_VERSION) file-utf8 --text --ignore '$(FL_IGNORE_PATHS)' --path .
 
 _lint-utf8-bom:
-	@docker run --rm -v $(CURRENT_DIR):/data cytopia/file-lint:$(FL_VERSION) file-utf8-bom --text --ignore '$(FL_IGNORE_PATHS)' --path .
+	@docker run --rm -v $(PWD):/data cytopia/file-lint:$(FL_VERSION) file-utf8-bom --text --ignore '$(FL_IGNORE_PATHS)' --path .
+
+_lint-git-conflicts:
+	@docker run --rm -v $(PWD):/data cytopia/file-lint:$(FL_VERSION) git-conflicts --text --ignore '$(FL_IGNORE_PATHS)' --path .
+
 ```
 
 
