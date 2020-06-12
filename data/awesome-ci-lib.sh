@@ -4,8 +4,8 @@ set -u
 #
 # Version
 #
-MY_VERSION="0.16"
-MY_DATE="2019-06-15"
+MY_VERSION="0.17"
+MY_DATE="2020-06-13"
 
 #
 # Credits
