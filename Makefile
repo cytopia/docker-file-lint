@@ -53,8 +53,8 @@ endif
 
 # Makefile.lint overwrites
 FL_IGNORES  = .git/,.github/,tests/
-SC_IGNORES  = .git/,.github/,tests/
-JL_IGNORES  = .git/,.github/
+SC_IGNORES  = .git/,.github/,tests/,Dockerfiles/data/awesome-ci-lib.sh
+JL_IGNORES  = .git/,.github/,./tests/
 
 
 # -------------------------------------------------------------------------------------------------
