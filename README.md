@@ -81,7 +81,6 @@ The following Docker image tags are built once and can be used for reproducible 
 
 ## :star: Features
 
-### Overview
 * dry run (which shows all piped unix command voodoo for learning)
 * project based configuration file (`awesome-ci.conf`)
 * check for empty files
@@ -98,7 +97,7 @@ The following Docker image tags are built once and can be used for reproducible 
     - check files by specific shebang only
     - check binary or text-files only
 
-### Tools
+## :wrench: Tools
 | Type | Tool | Fixable | Description |
 |------|------|---------|-------------|
 | File | [file-cr](data/file-cr) | ✓ | Scan files and check if they contain CR (Carriage Return only). |
