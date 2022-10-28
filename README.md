@@ -73,10 +73,12 @@ The following Docker image tags are built once and can be used for reproducible 
 [![build](https://github.com/cytopia/docker-file-lint/workflows/build/badge.svg)](https://github.com/cytopia/docker-file-lint/actions?query=workflow%3Abuild)
 
 
-| Docker Tag           | Git Ref   | file-lint    | Flavour | Available Architectures                      |
-|----------------------|-----------|--------------|---------|----------------------------------------------|
-| `latest-0.11`        | tag: 0.11 | latest       | default | `amd64`, `i386`, `arm64`, `arm/v7`, `arm/v6` |
-| `alpine-latest-0.11` | tag: 0.11 | latest       | Alpine  | `amd64`, `i386`, `arm64`, `arm/v7`, `arm/v6` |
+| Docker Tag            | Git Ref      | file-lint    | Flavour | Available Architectures                      |
+|-----------------------|--------------|--------------|---------|----------------------------------------------|
+| `latest-<tag>`        | tag: `<tag>` | latest       | default | `amd64`, `i386`, `arm64`, `arm/v7`, `arm/v6` |
+| `alpine-latest-<tag>` | tag: `<tag>` | latest       | Alpine  | `amd64`, `i386`, `arm64`, `arm/v7`, `arm/v6` |
+
+> Where `<tag>` refers to the chosen git tag from this repository.
 
 
 ## :star: Features
