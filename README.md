@@ -102,16 +102,16 @@ The following Docker image tags are built once and can be used for reproducible 
 ## :wrench: Tools
 | Type | Tool | Fixable | Description |
 |------|------|---------|-------------|
-| File | [file-cr](data/file-cr) | ✓ | Scan files and check if they contain CR (Carriage Return only). |
-| File | [file-crlf](data/file-crlf) | ✓ | Scan files and check if they contain CRLF (Windows Line Feeds). |
-| File | [file-empty](data/file-empty) | | Scan files and check if they are empty (0 bytes). |
-| File | [file-nullbyte](data/file-nullbyte) | ✓ | Scan files and check if they contain a null-byte character (`\x00)`. |
-| File | [file-trailing-newline](data/file-trailing-newline) | ✓ | Scan files and check if they contain a trailing newline. |
-| File | [file-trailing-single-newline](data/file-trailing-single-newline) | ✓ | Scan files and check if they contain exactly one trailing newline. |
-| File | [file-trailing-space](data/file-trailing-space) | ✓ | Scan files and check if they contain trailing whitespaces. |
-| File | [file-utf8](data/file-utf8) | ✓ | Scan files and check if they have a non UTF-8 encoding. |
-| File | [file-utf8-bom](data/file-utf8-bom) | ✓ | Scan files and check if they contain BOM (Byte Order Mark): `U+FEFF`. |
-| Git  | [git-conflicts](data/git-conflicts) |   | Scan files and check if they contain git conflicts. |
+| File | [file-cr](Dockerfiles/data/file-cr) | ✓ | Scan files and check if they contain CR (Carriage Return only). |
+| File | [file-crlf](Dockerfiles/data/file-crlf) | ✓ | Scan files and check if they contain CRLF (Windows Line Feeds). |
+| File | [file-empty](Dockerfiles/data/file-empty) | | Scan files and check if they are empty (0 bytes). |
+| File | [file-nullbyte](Dockerfiles/data/file-nullbyte) | ✓ | Scan files and check if they contain a null-byte character (`\x00)`. |
+| File | [file-trailing-newline](Dockerfiles/data/file-trailing-newline) | ✓ | Scan files and check if they contain a trailing newline. |
+| File | [file-trailing-single-newline](Dockerfiles/data/file-trailing-single-newline) | ✓ | Scan files and check if they contain exactly one trailing newline. |
+| File | [file-trailing-space](Dockerfiles/data/file-trailing-space) | ✓ | Scan files and check if they contain trailing whitespaces. |
+| File | [file-utf8](Dockerfiles/data/file-utf8) | ✓ | Scan files and check if they have a non UTF-8 encoding. |
+| File | [file-utf8-bom](Dockerfiles/data/file-utf8-bom) | ✓ | Scan files and check if they contain BOM (Byte Order Mark): `U+FEFF`. |
+| Git  | [git-conflicts](Dockerfiles/data/git-conflicts) |   | Scan files and check if they contain git conflicts. |
 
 > <sub>Tools extracted from https://github.com/cytopia/awesome-ci</sub>
 
