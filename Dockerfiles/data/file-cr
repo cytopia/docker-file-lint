@@ -7,9 +7,9 @@ set -u
 
 # Name and messages
 MY_NAME="file-cr"
-MY_DESC="Scans recursively for files containing CR (Carriage Return only Line Feeds)."
-MY_FINISH_OK="No files with CR (Carriage Return only Line Feed) found."
-MY_FINISH_ERR="Files with CR (Carriage Return Line Feed) found."
+MY_DESC="Scans recursively for files containing CR (Carriage Return only newlines)."
+MY_FINISH_OK="No files with CR (Carriage Return only newline) found."
+MY_FINISH_ERR="Files with CR (Carriage Return newline) found."
 
 # Configuration file prefix
 MY_CONF_PRE="FILE_CR_"
