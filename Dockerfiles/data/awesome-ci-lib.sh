@@ -756,7 +756,7 @@ fi
 # 'find' pattern for ignores/excludes
 #
 if [ "${MY_IGN}" != "" ]; then
-	EXCL_PATTERN="-not \( -path \"${MY_PATH}/${MY_IGN//,/*\" -o -path \"${MY_PATH}\/}*\" \)"
+	EXCL_PATTERN="-not \( -path \"${MY_PATH}/${MY_IGN//,/\" -o -path \"${MY_PATH}\/}\" \)"
 else
 	EXCL_PATTERN=""
 fi
